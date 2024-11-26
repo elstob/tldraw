@@ -98,9 +98,9 @@ function areShortcutsDisabled(editor: Editor) {
  * @param editor - The editor instance.
  * @param data - The text to paste.
  * @param point - The point at which to paste the text.
- * @internal
+ * @public
  */
-const handleText = (
+export const handleText = (
 	editor: Editor,
 	data: string,
 	point?: VecLike,

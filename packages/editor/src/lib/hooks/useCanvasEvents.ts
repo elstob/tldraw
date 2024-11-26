@@ -117,7 +117,26 @@ export function useCanvasEvents() {
 			async function onDrop(e: React.DragEvent<Element>) {
 				preventDefault(e)
 				stopEventPropagation(e)
-				if (!e.dataTransfer?.files?.length) return
+				// if (!e.dataTransfer?.files?.length) return
+
+				// What happens if I am dragging from within the browser? I have no files...
+				if (!e.dataTransfer?.files?.length) {
+					// Probably want to handle this in the same way `handleText` works
+					// in the main libraries `useClipboardEvents` hooks but as an example...
+					for (const i in e.dataTransfer.types) {
+						const type = e.dataTransfer.types[i]
+						console.warn(e.dataTransfer.getData(type))
+
+						// Would be much nicer if we discerned the correct type here (url etc) but lets
+						// just dump it as text for now
+						await editor.putExternalContent({
+							type: 'text',
+							text: e.dataTransfer.getData(type),
+							point: editor.screenToPage({ x: e.clientX, y: e.clientY }),
+						})
+					}
+					return
+				}
 
 				const files = Array.from(e.dataTransfer.files)
 

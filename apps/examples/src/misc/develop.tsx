@@ -50,6 +50,67 @@ function afterChangeHandler(prev: any, next: any) {
 	}
 }
 
+function ExamplePanel() {
+	return (
+		<div
+			style={{
+				background: 'white',
+				position: 'absolute',
+				left: '100px',
+				top: '100px',
+				padding: '10px',
+				height: '200px',
+				width: '200px',
+				zIndex: 500,
+			}}
+		>
+			<div
+				draggable
+				onDragStart={(ev) => {
+					ev.dataTransfer.setData('text', 'Red box')
+				}}
+				style={{
+					background: 'red',
+					display: 'inline-block',
+					padding: '5px',
+				}}
+			>
+				Drag me onto canvas
+			</div>
+			<div
+				draggable
+				onDragStart={(ev) => {
+					ev.dataTransfer.setData('text', 'https://www.youtube.com/watch?v=NGOq0QoYW2U')
+				}}
+				style={{
+					background: 'blue',
+					display: 'inline-block',
+					padding: '5px',
+				}}
+			>
+				I give a URL
+			</div>
+
+			<div
+				draggable
+				onDragStart={(ev) => {
+					ev.dataTransfer.setData(
+						'text/html',
+						'<p>This is a sample paragraph with some <strong>bold text</strong> and a <a href="https://example.com">link</a>.</p>'
+					)
+				}}
+				style={{
+					background: 'yellow',
+					display: 'inline-block',
+					padding: '5px',
+				}}
+			>
+				I give HTML
+			</div>
+		</div>
+	)
+}
+
 export default function Develop() {
 	const performanceOverrides = usePerformance()
 	const debuggingOverrides = useDebugging()
@@ -71,7 +132,9 @@ export default function Develop() {
 					}
 				}}
 				components={components}
-			/>
+			>
+				<ExamplePanel />
+			</Tldraw>
 		</div>
 	)
 }
